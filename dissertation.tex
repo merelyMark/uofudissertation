@@ -109,30 +109,6 @@ menucolor=rltdarkblue,           % ???
 % group comma separator for large numbers
 \sisetup{group-separator = {,}}
 
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
-
-\pgfplotstableread[col sep=comma]{movingsurfaces_tex/data.txt}\mytable
-\def\getcell#1#2#3{
-	\pgfplotstablegetelem{#1}{#2}\of{#3}\pgfplotsretval%
-}
-
-\pgfplotstableread[col sep=comma]{movingsurfaces_tex/data-neighbor-idx.csv}\neighidx
-\def\getcell#1#2#3{
-	\pgfplotstablegetelem{#1}{#2}\of{#3}\pgfplotsretval%
-}
-
-\newcommand{\plotfile}[1]{
-	\pgfplotstableread{#1}{\table}
-	\pgfplotstablegetcolsof{#1}
-	\pgfmathtruncatemacro\numberofcols{\pgfplotsretval-1}
-	\pgfplotsinvokeforeach{1,...,\numberofcols}{
-		\pgfplotstablegetcolumnnamebyindex{##1}\of{\table}\to{\colname}
-		\addplot table [y index=##1] {#1}; 
-		\addlegendentryexpanded{\colname}
-	}
-}
-
 %\usepackage{cite}
 \citeindextrue
 \makeindex
@@ -208,10 +184,14 @@ menucolor=rltdarkblue,           % ???
 \frontmatterformat
 \titlepage
 \copyrightpage
-\statementofapproval
+
+%Statement of approval is a Word document on the Thesis Office website.
+%It is supposed to take place of the committee and reading approval pages since
+%those are printed on nice paper to be inserted into your final copy.
+%\statementofapproval
 %Thesis office doesn't need committee and reading pages since it should have the "real" copy.
-%\committeeapproval
-%\readingapproval
+\committeeapproval
+\readingapproval
 
 %% Abstract page
 \preface{chapter_abstract}{Abstract}
@@ -235,13 +215,10 @@ menucolor=rltdarkblue,           % ???
 \maintext % start normal page numbering, parts and chapters follow
 \newcommand{\markmarker}[1]{{#1}}
 
+%Organize this however you want.
 \include{intro}
-\include{previous-works}
-\include{red-black-gauss-seidel}
-\include{closest-point-representation}
-\include{surfaceflow}
-\include{cpso}
-\include{conclusion}
+%\include{previous-works}
+%\include{conclusion}
 
 %\chapter{Appendix}
 
