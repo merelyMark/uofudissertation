@@ -1,0 +1,261 @@
+\documentclass[12pt,Chicago,final]{uuthesis2e}
+\pdfpagewidth 8.5truein
+\pdfpageheight 11.0truein
+%\documentclass[12pt,Chicago,draft]{uuthesis2e}
+\usepackage[%
+labelsep=period
+]{caption}
+\usepackage{uuthesis-2013}
+\usepackage{ifpdf}
+\raggedbottom
+
+%\usepackage[nooneline]{subfigure}
+\usepackage{hyphenat}
+\usepackage{afterpage}
+
+\usepackage[sectionbib,numbers]{natbib} % numeric citations
+
+\usepackage{color}
+\usepackage{mathptmx}
+
+\usepackage{times}
+
+\usepackage{amssymb}
+\usepackage{eepic}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{alltt}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathptmx}
+\usepackage{url}
+\usepackage{pxfonts}
+
+\usepackage{multirow}
+\usepackage{moreverb}
+\usepackage{subfig}
+\usepackage{listings}
+\usepackage{lscape}
+\usepackage[all]{nowidow}
+\usepackage{booktabs}
+\usepackage{import}
+\usepackage{hhline}% http://ctan.org/pkg/hhline
+\ifpdf
+	\usepackage[pdftex]{graphicx}
+	\pdfcompresslevel=9
+	\DeclareGraphicsExtensions{{.png},{.pdf},{.jpg},{jpeg}}
+	\graphicspath{ {png/} {jpg/} {pdf/} {Figures/} }
+	\usepackage[final]{pdfpages}
+\else
+	\usepackage[dvips]{graphicx}
+	\DeclareGraphicsExtensions{.eps}
+	\graphicspath{ {fig/} {eps/} }
+\fi
+
+\usepackage{mwe,tikz}\usepackage[percent]{overpic}
+\usetikzlibrary{shadows}
+\usepackage{rotating} % Provides {sideways}{sidewaysfigure}{sidewaystable} environments
+
+%%
+\usepackage{color}
+\definecolor{rltbrightred}{rgb}{1,0,0}
+\definecolor{rltred}{rgb}{0.75,0,0}
+\definecolor{rltdarkred}{rgb}{0.5,0,0}
+%
+\definecolor{rltbrightgreen}{rgb}{0,0.75,0}
+\definecolor{rltgreen}{rgb}{0,0.5,0}
+\definecolor{rltdarkgreen}{rgb}{0,0,0.25}
+%
+\definecolor{rltbrightblue}{rgb}{0,0,1}
+\definecolor{rltblue}{rgb}{0,0,0.75}
+\definecolor{rltdarkblue}{rgb}{0,0,0.5}
+
+\newenvironment{figure*}
+{\begin{figure}}
+{\end{figure}}
+
+\begin{comment}
+\usepackage
+[
+bookmarksopen=true,
+%linktocpage,
+colorlinks=true,
+urlcolor=rltdarkblue,                % \href{...}{...}
+filecolor=rltdarkblue,              % \href*{...}
+linkcolor=rltdarkblue,                % \ref{...} and \pageref{...}
+citecolor=rltdarkblue,        % \cite{...}
+anchorcolor=rltdarkblue,       % ???
+menucolor=rltdarkblue,           % ??? 
+]
+{hyperref} 
+\end{comment}
+
+\usepackage[chapter]{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amssymb}
+
+\newcommand{\torsoname}{torso\_29yo}
+\newcommand{\torsocnt}{2.74M}
+\newcommand{\VEC}[2]{\mathbf{#1}_{#2}}
+\newcommand{\etal}{\textit{et al.}}
+\DeclareMathOperator\ShiftLeft{\texttt{<<}}% shift left
+\DeclareMathOperator\ShiftRight{\texttt{>>}}% shift left
+
+
+
+
+\usepackage{siunitx}
+% group comma separator for large numbers
+\sisetup{group-separator = {,}}
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\pgfplotstableread[col sep=comma]{movingsurfaces_tex/data.txt}\mytable
+\def\getcell#1#2#3{
+	\pgfplotstablegetelem{#1}{#2}\of{#3}\pgfplotsretval%
+}
+
+\pgfplotstableread[col sep=comma]{movingsurfaces_tex/data-neighbor-idx.csv}\neighidx
+\def\getcell#1#2#3{
+	\pgfplotstablegetelem{#1}{#2}\of{#3}\pgfplotsretval%
+}
+
+\newcommand{\plotfile}[1]{
+	\pgfplotstableread{#1}{\table}
+	\pgfplotstablegetcolsof{#1}
+	\pgfmathtruncatemacro\numberofcols{\pgfplotsretval-1}
+	\pgfplotsinvokeforeach{1,...,\numberofcols}{
+		\pgfplotstablegetcolumnnamebyindex{##1}\of{\table}\to{\colname}
+		\addplot table [y index=##1] {#1}; 
+		\addlegendentryexpanded{\colname}
+	}
+}
+
+%\usepackage{cite}
+\citeindextrue
+\makeindex
+%\includeonly{chapter1}
+\title{GPU-Enabled Surface Visualization}
+
+\author{Mark Kim}
+
+%\thesistype{proposal}
+\thesistype{dissertation}
+
+\degree{Doctor of Philosophy}
+
+\graduatedean{David S. Chapman}
+\department{School of Computing}
+\departmentchair{Ross Whitaker}
+\committeechair{Charles D. Hansen}
+\chairtitle{Professor}
+\firstreader{Christopher Johnson}
+\secondreader{Mike Kirby}
+\thirdreader{Ross Whitaker}
+\fourthreader{Guoning Chen}
+
+\submitdate{May 2016}
+\copyrightyear{2016}
+
+% chapter is one level, section and subsection are the next two levels
+\fourlevels
+
+%% Dedication page
+\dedication{}
+
+%\inputpicturetrue % By Jeff McGough. See uuguide and private thesis.sty
+%\inputpicturefalse % To NOT produce pictures, uncomment this line
+
+%\newcommand{\BM }[1] {\mbox{\boldmath $#1$}}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For shortening citations in the bibliography that are greater than six to et al.
+% Since I am not using IEEE as my class, I need to declare this function.
+% http://tex.stackexchange.com/questions/164017/limiting-the-number-of-authors-in-the-references-with-ieeetran
+% http://tex.stackexchange.com/questions/16506/bibliography-author-initial-spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
+\def\@bstctlcite[#1]#2{\@bsphack
+	\@for\@citeb:=#2\do{%
+		\edef\@citeb{\expandafter\@firstofone\@citeb}%
+		\if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
+	\@esphack}
+\makeatother
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE: This function is declared above. It is used to control the 
+% IEEEtrans bibliography bst.
+% See the dissertation.bib for the @IEEEtranBSTCTL that forces the use 
+% of et al. for author count greater than six.
+% http://tex.stackexchange.com/questions/164017/limiting-the-number-of-authors-in-the-references-with-ieeetran
+% http://tex.stackexchange.com/questions/16506/bibliography-author-initial-spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bstctlcite{IEEEexample:BSTcontrol}
+%change how figures are named
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\textfraction}{0.2}
+\renewcommand{\floatpagefraction}{1.0}
+
+\setcounter{bottomnumber}{1}
+\setcounter{topnumber}{3}
+
+%% Front matter
+\frontmatterformat
+\titlepage
+\copyrightpage
+\statementofapproval
+%Thesis office doesn't need committee and reading pages since it should have the "real" copy.
+%\committeeapproval
+%\readingapproval
+
+%% Abstract page
+\preface{chapter_abstract}{Abstract}
+
+\setcounter{page}{3}
+
+%% Dedication page
+%\dedicationpage
+
+%% Table of contents, etc.
+\tableofcontents
+\listoffigures
+\listoftables
+
+%\optionalfront{Notation and Symbols}{\input{notation.tex}}
+
+% Acknowledgments page.
+\preface{chapter_acknowledgements}{Acknowledgements}
+%\preface{intro}{Introduction}
+
+\maintext % start normal page numbering, parts and chapters follow
+\newcommand{\markmarker}[1]{{#1}}
+
+\include{intro}
+\include{previous-works}
+\include{red-black-gauss-seidel}
+\include{closest-point-representation}
+\include{surfaceflow}
+\include{cpso}
+\include{conclusion}
+
+%\chapter{Appendix}
+
+\numberofappendices = 0 % set 0 for none, else number of appendices
+%\appendix % chapters, sections are now appendix style
+%\include{appendix}
+%\nocite{*}
+
+% The choice of bibliography style is a major decision, jointly made
+% by you, your thesis advisor and the thesis editor. Common choices are
+% "siam", "acm", "amsplain", "plain", "chicago".
+
+%\bibliographystyle{unsrtnat}
+\bibliographystyle{ieeetrans}
+\bibliography{dissertation}
+
+\end{document}

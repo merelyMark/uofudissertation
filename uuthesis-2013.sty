@@ -1,0 +1,38 @@
+%%% -*-LaTeX-*-
+
+%%% ====================================================================
+%%% This file contains a small set of changes the venerable uuthesis
+%%% support for LaTeX-2e to adjust page dimensions to the even worse
+%%% typography of the 2010--2011 University of Utah thesis guidelines,
+%%% sigh...
+%%% [22-Aug-2013] -- update for 2013 specifications on page 24 if
+%%%                  http://gradschool.utah.edu/thesis/wp-content/uploads/2013/08/2013-fall-handbook.pdf
+%%% [25-Mar-2011]
+%%% ====================================================================
+
+\immediate \write16 {====================================================================================================}
+\immediate \write16 {uuthesis-2013.sty version 0.03 <22 August 2013>}
+\immediate \write16 {WARNING: the page dimension changes are experimental, and subject to change!}
+\immediate \write16 {PLEASE: report to the uuthesis maintainers any further modifications demanded by the UofUtah Thesis Office}
+\immediate \write16 {====================================================================================================}
+
+\textheight		= 8.65in
+\textwidth 		= 6in
+
+\oddsidemargin		= 0.25in
+\evensidemargin		= 0.25in
+
+\topskip		= 0.0in
+\topmargin		= 0.0in
+\headheight		= 0.0in
+\headsep		= 24pt
+
+\footskip		= 0.0in
+
+\flushbottom
+
+\voffset                = 0in
+\textheight		= 8.65in
+
+\addtolength{\voffset}   {-20pt}
+\addtolength{\textheight}{+20pt}
